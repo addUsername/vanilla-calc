@@ -1,4 +1,18 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+/* Animation from left to right for .options*/
+@keyframes example {
+    from {width: 15%}
+    to {width: 50%}
+}
+/* In order to reload this animation we have to remove this 
+class and the add it again */
+.animation{
+    overflow:visible;
+    animation-name: example;
+    animation-duration: 0.3s;
+}
+/* Color and fonts variables*/
 :root{
     --bg-color: rgb(188,221,236);
     --op-color: rgb(216,235,243);
@@ -8,6 +22,7 @@
 
     --menu-color: rgb(224,231,235);
     --menu-hover-color: rgb(206,212,216);
+
     --past-font-size: 2.5rem;
     --present-font-size: 3.4rem;
 }
@@ -16,14 +31,17 @@
     margin: auto;
     padding: 0;
 }
+/* calculator main content */
 .calc {
     width: 325px;
     height: 530px;
     border: 1px solid #000000;
+    box-shadow: 3px 5px 15px #888888;
     background: var(--bg-color);
     font-family: 'Open Sans', sans-serif;
     position: absolute;
 }
+/* top half */
 .up{    
     height: 38%;
     padding: 10px 10px;
@@ -32,14 +50,13 @@
     height: 19.3%;
     cursor: grab;
 }
-
 #title:active{
     cursor:grabbing;
 }
 #subbar{
     height: 7.35%;
 }
-/* Collapsable */
+/* start collapsable */
 .menu{    
     cursor: pointer;
 }
@@ -48,29 +65,36 @@
     border: 1px solid #000000;
     margin: 0;
     width: 50%;
-    overflow:hidden;
     position:relative;
-    z-index: -1 ;
+    z-index: -1;
+}
+.option{    
     cursor: pointer;
+}
+.option.pOption{
+    overflow-x: hidden;
 }
 div.option:hover{
     background-color: var(--menu-hover-color);
 }
+/* end collapsable */
 
 .display{
-    text-align: right;    
+    text-align: right; 
 }
 #past {
     height: 30%;
     letter-spacing: -5px;
-    font-size: var(--past-font-size);
+    font-size: var(--past-font-size);    
+    overflow-x: auto; 
 }
 #present{
     height: 70%;
     font-weight: 600;
     font-size: var(--present-font-size);
+    overflow-x: auto;
 }
-
+/* bottom half */
 .down {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -85,16 +109,19 @@ div.option:hover{
     align-items: center;    
     cursor: pointer;
 }
+/* button that isn't an int */
 .op{    
     border: 10px var(--bg-color);
     background: var(--op-color);
 }
+/* int button */
 .num{
     background: var(--num-color);
 }
 div.op:hover, div.num:hover{
     background: var(--hover-color);
 }
+/* equals button */
 .eq{
     background: var(--eq-color);
 }
