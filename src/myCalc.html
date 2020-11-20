@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="mycss.css">
+<body>
+    <h1>Awesomest calculator</h1>
+    <div class="calc" id="calc">
+        <div class="up">
+            <div id="title">Calc _ o x</div>
+
+            <div id="subbar">
+                <div class="menu" onClick="expand()">
+                    <img src="menu.svg"/>
+                </div>
+                <div id="options">
+                    <p>Calculadora</p>
+                    <div class="option" id="normal" onclick="changeCalc(this)">Normal</div>
+                    <div class="option" id="graph" onclick="changeCalc(this)">Graph</div>
+                    <div class="option" id="conversor" onclick="changeCalc(this)">Conversor</div>
+                    <p>Acerca de</p>
+                    <div class="option">GitHub</div>
+                    <div class="option">11/2020</div>
+                </div>
+            </div>
+
+            <div class="display">
+                <div id="past">02+</div>
+                <div id="present">0123456789</div>
+            </div>
+        </div>
+
+        <div class="down">
+            <!-- 1 row -->
+            <div class="button op" id="percentage" onclick="onClickEvent(this)">%</div>
+            <div class="button op" onclick="onClickEvent(this)"> CE</div>
+            <div class="button op" onclick="onClickEvent(this)">C</div>
+            <div class="button op" onclick="onClickEvent(this)">del</div>
+            <!-- 2 row -->
+            <div class="button op" onclick="onClickEvent(this)">1/x</div>
+            <div class="button op" onclick="onClickEvent(this)">x2</div>
+            <div class="button op" onclick="onClickEvent(this)">2//x</div>
+            <div class="button op" onclick="onClickEvent(this)">%</div>
+            <!-- 3 row -->
+            <div class="button num" onclick="onClickEvent(this)">7</div>
+            <div class="button num" onclick="onClickEvent(this)">8</div>
+            <div class="button num" onclick="onClickEvent(this)">9</div>
+            <div class="button op" onclick="onClickEvent(this)">X</div>
+            <!-- 4 row -->
+            <div class="button num" onclick="onClickEvent(this)">4</div>
+            <div class="button num" onclick="onClickEvent(this)"> 5</div>
+            <div class="button num" onclick="onClickEvent(this)">6</div>
+            <div class="button op" onclick="onClickEvent(this)">-</div>
+            <!-- 5 row -->
+            <div class="button num" onclick="onClickEvent(this)">1</div>
+            <div class="button num" onclick="onClickEvent(this)">2</div>
+            <div class="button num" onclick="onClickEvent(this)">3</div>
+            <div class="button op" onclick="onClickEvent(this)">+</div>
+            <!-- 6 row -->
+            <div class="button num" onclick="onClickEvent(this)">+/-</div>
+            <div class="button num" onclick="onClickEvent(this)">0</div>
+            <div class="button num" onclick="onClickEvent(this)">,</div>
+            <div class="button eq" onclick="onClickEvent(this)">=</div>
+        </div>
+    </div>
+</body>
+<script>
+    var m = document.getElementById('calc');
+    var title = document.getElementById("title");
+    var x1, x2;
+    var posx, posy;
+    title.addEventListener('mousedown', mouseDown);
+    window.addEventListener('mouseup', mouseUp);
+
+    function mouseUp() {
+        window.removeEventListener('mousemove', move, true);
+        window.removeEventListener("mouseup", mouseUp,true);
+    }
+
+    function mouseDown(e) { 
+        x1 = e.clientX;
+        y1 = e.clientY;
+        posx = leftPx();
+        posy = topPx();
+        window.addEventListener('mousemove', move, true);
+    }
+
+    function move(e) {
+        e = e || window.event;
+        e.preventDefault();
+        console.log("top");
+        console.log(m.style.left + m.style.top)
+        console.log(leftPx() + " | " + (e.clientX-x1));
+        m.style.left = (leftPx() + (e.clientX-x1))+"px";
+        m.style.top = (topPx() + (e.clientY-y1))+"px";
+        console.log(m.style.left + m.style.top)
+    };
+    function topPx(){
+        return title.offsetTop;
+    };
+    function leftPx(){
+        return title.offsetLeft;
+    };
+</script>
+<script>
+    document.getElementById("options").style.overflow = "hidden";
+    function expand(){
+        var menu = document.getElementById("options");
+        console.log(menu.style.overflow)
+        if(menu.style.overflow == "hidden"){
+            menu.style.overflow = "visible";
+            menu.style.zIndex = 10;
+        }else{
+            menu.style.overflow = "hidden";
+            menu.style.zIndex = -1;
+        }        
+    }
+    function changeCalc(obj){
+        this.expand();
+        obj.getAttribute("id");
+    }
+    function onClickEvent(obj){
+        alert(obj.className+" "+obj.getAttribute("id"));
+    }
+</script>
+</html>
