@@ -1,2 +1,2 @@
 # vanilla-calc
-Calculator app, windows style write in pure css &amp; js 
+Calculator app, windows style written in pure css &amp; js 
