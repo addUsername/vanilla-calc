@@ -12,11 +12,11 @@
                     <img src="menu.svg"/>
                 </div>
                 <div id="options">
-                    <p>Calculadora</p>
+                    <p class="pOption">Calculadora</p>
                     <div class="option" id="normal" onclick="changeCalc(this)">Normal</div>
                     <div class="option" id="graph" onclick="changeCalc(this)">Graph</div>
                     <div class="option" id="conversor" onclick="changeCalc(this)">Conversor</div>
-                    <p>Acerca de</p>
+                    <p class="pOption">Acerca de</p>
                     <div class="option">GitHub</div>
                     <div class="option">11/2020</div>
                 </div>
@@ -24,7 +24,7 @@
 
             <div class="display">
                 <div id="past">02+</div>
-                <div id="present">0123456789</div>
+                <div id="present">012345678</div>
             </div>
         </div>
 
@@ -67,12 +67,16 @@
     var title = document.getElementById("title");
     var x1, x2;
     var posx, posy;
+
     title.addEventListener('mousedown', mouseDown);
     window.addEventListener('mouseup', mouseUp);
 
+    m.style.left = window.screen.width/2.5+"px";
+    m.style.top = window.screen.height/20+"px";
+
     function mouseUp() {
         window.removeEventListener('mousemove', move, true);
-        window.removeEventListener("mouseup", mouseUp,true);
+        //window.removeEventListener("mouseup", mouseUp,true);
     }
 
     function mouseDown(e) { 
@@ -84,14 +88,10 @@
     }
 
     function move(e) {
-        e = e || window.event;
-        e.preventDefault();
-        console.log("top");
-        console.log(m.style.left + m.style.top)
-        console.log(leftPx() + " | " + (e.clientX-x1));
+        //e = e || window.event;
+        //e.preventDefault();
         m.style.left = (leftPx() + (e.clientX-x1))+"px";
         m.style.top = (topPx() + (e.clientY-y1))+"px";
-        console.log(m.style.left + m.style.top)
     };
     function topPx(){
         return title.offsetTop;
@@ -101,11 +101,17 @@
     };
 </script>
 <script>
+    /* animation starts on windows.onLoad.. little trick */
     document.getElementById("options").style.overflow = "hidden";
+
+    /* expand-collapse method */
     function expand(){
         var menu = document.getElementById("options");
-        console.log(menu.style.overflow)
         if(menu.style.overflow == "hidden"){
+            /* needed to reload the animation */
+            menu.classList.remove("animation");            
+            void menu.offsetWidth;
+            menu.classList.add("animation");
             menu.style.overflow = "visible";
             menu.style.zIndex = 10;
         }else{
@@ -114,8 +120,8 @@
         }        
     }
     function changeCalc(obj){
-        this.expand();
-        obj.getAttribute("id");
+        this.expand();  //cerrar el collapsable
+        obj.getAttribute("id"); //option clicked
     }
     function onClickEvent(obj){
         alert(obj.className+" "+obj.getAttribute("id"));
