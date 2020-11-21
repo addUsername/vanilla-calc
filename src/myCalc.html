@@ -76,37 +76,25 @@
 
     function mouseUp() {
         window.removeEventListener('mousemove', move, true);
-        //window.removeEventListener("mouseup", mouseUp,true);
     }
-
-    function mouseDown(e) { 
-        x1 = e.clientX;
-        y1 = e.clientY;
-        posx = leftPx();
-        posy = topPx();
+    function mouseDown(e) {
+        x1 = m.getBoundingClientRect().left - e.clientX;
+        y1 = m.getBoundingClientRect().top - e.clientY;
         window.addEventListener('mousemove', move, true);
     }
-
     function move(e) {
         //e = e || window.event;
         //e.preventDefault();
-        m.style.left = (leftPx() + (e.clientX-x1))+"px";
-        m.style.top = (topPx() + (e.clientY-y1))+"px";
+        m.style.left = x1+e.clientX +"px";
+        m.style.top = y1+e.clientY +"px";
     };
-    function topPx(){
-        return title.offsetTop;
-    };
-    function leftPx(){
-        return title.offsetLeft;
-    };
-</script>
-<script>
+    </script>
+    <script>
     /* animation starts on windows.onLoad.. little trick */
-    document.getElementById("options").style.overflow = "hidden";
-
+    var menu = document.getElementById("options");
+    menu.style.overflow = "hidden"
     /* expand-collapse method */
     function expand(){
-        var menu = document.getElementById("options");
         if(menu.style.overflow == "hidden"){
             /* needed to reload the animation */
             menu.classList.remove("animation");            

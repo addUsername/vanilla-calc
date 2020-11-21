@@ -14,6 +14,8 @@ class and the add it again */
 }
 /* Color and fonts variables*/
 :root{
+    --min-sizeX-calc:325px;
+    --mix-sizeY-calc:539px;
     --bg-color: rgb(188,221,236);
     --op-color: rgb(216,235,243);
     --num-color: rgb(242,248,250);
@@ -23,23 +25,30 @@ class and the add it again */
     --menu-color: rgb(224,231,235);
     --menu-hover-color: rgb(206,212,216);
 
-    --past-font-size: 2.5rem;
-    --present-font-size: 3.4rem;
+    --past-font-size: 2.5em;
+    --present-font-size: 3.4em;
 }
 * {
     box-sizing: border-box;
     margin: auto;
     padding: 0;
 }
+body{
+    background: #888888;
+}
 /* calculator main content */
 .calc {
-    width: 325px;
-    height: 530px;
+    width: var(--mix-sizeX-calc);
+    height: var(--mix-sizeY-calc);
+    min-width: var(--mix-sizeX-calc);
+    min-height: var(--mix-sizeY-calc);
     border: 1px solid #000000;
     box-shadow: 3px 5px 15px #888888;
     background: var(--bg-color);
     font-family: 'Open Sans', sans-serif;
     position: absolute;
+    resize: both;
+    overflow: auto;
 }
 /* top half */
 .up{    
