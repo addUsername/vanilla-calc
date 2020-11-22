@@ -53,11 +53,17 @@ class and the add it again */
 @media only screen and (max-width: 600px) {
     .calc{
         width: 85% !important;
-        height: 600px !important;
+        height: 580px !important;
         left:10px !important;
         top:50px !important;
         min-width: var(--min-sizeX-calc);
         min-height: var(--min-sizeY-calc);
+    }
+    #sticker{
+        bottom: 0%;
+        right:0%;
+        width: 20%;
+        font-size: 1em;
     }
  }
 :root{
