@@ -2,8 +2,25 @@
 
 /* Animation from left to right for .options*/
 @keyframes example {
-    from {width: 15%}
-    to {width: 50%}
+    from {
+        margin-right: 100%;
+        width: 15%;
+    }
+    to {
+        margin-right: 0%;
+        width: 100%;
+    }
+}
+/* Animation from right to left for .history*/
+@keyframes example2 {
+    from {
+        margin-left: 100%;
+        width: 15%;
+    }
+    to {
+        margin-left: 0%;
+        width: 100%;
+    }
 }
 /* In order to reload this animation we have to remove this 
 class and the add it again */
@@ -12,10 +29,15 @@ class and the add it again */
     animation-name: example;
     animation-duration: 0.3s;
 }
+.animation2{
+    overflow:visible;
+    animation-name: example2;
+    animation-duration: 0.3s;
+}
 /* Color and fonts variables*/
 :root{
     --min-sizeX-calc:325px;
-    --mix-sizeY-calc:539px;
+    --min-sizeY-calc:539px;
     --bg-color: rgb(188,221,236);
     --op-color: rgb(216,235,243);
     --num-color: rgb(242,248,250);
@@ -25,7 +47,7 @@ class and the add it again */
     --menu-color: rgb(224,231,235);
     --menu-hover-color: rgb(206,212,216);
 
-    --past-font-size: 2.5em;
+    --past-font-size: 1.5em;
     --present-font-size: 3.4em;
 }
 * {
@@ -38,17 +60,18 @@ body{
 }
 /* calculator main content */
 .calc {
-    width: var(--mix-sizeX-calc);
-    height: var(--mix-sizeY-calc);
-    min-width: var(--mix-sizeX-calc);
-    min-height: var(--mix-sizeY-calc);
+    width: var(--min-sizeX-calc);
+    height: var(--min-sizeY-calc);
+    min-width: var(--min-sizeX-calc);
+    min-height: var(--min-sizeY-calc);
     border: 1px solid #000000;
     box-shadow: 3px 5px 15px #888888;
     background: var(--bg-color);
     font-family: 'Open Sans', sans-serif;
     position: absolute;
     resize: both;
-    overflow: auto;
+    /*overflow: auto;*/    
+    overflow: hidden;
 }
 /* top half */
 .up{    
@@ -62,20 +85,26 @@ body{
 #title:active{
     cursor:grabbing;
 }
-#subbar{
+.menu{
     height: 7.35%;
-}
-/* start collapsable */
-.menu{    
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    justify-content: space-between;
     cursor: pointer;
 }
+#spacer{
+    grid-column: 2 / span 2;
+}
+/* start collapsable */
 #options{
     background: var(--menu-color);
     border: 1px solid #000000;
     margin: 0;
-    width: 50%;
+    width: 100%;
     position:relative;
     z-index: -1;
+    grid-column: 1 / span 2;
 }
 .option{    
     cursor: pointer;
@@ -84,6 +113,24 @@ body{
     overflow-x: hidden;
 }
 div.option:hover{
+    background-color: var(--menu-hover-color);
+}
+/* end collapsable */
+/* start collapsable history */
+#history{
+    background: var(--menu-color);
+    border: 1px solid #000000;
+    margin: 0;
+    width: 100%;
+    position:relative;
+    z-index: -1;
+    grid-column: 3 / span 2;
+}
+.record{    
+    cursor: pointer;
+    overflow-x: hidden;
+}
+.record:hover{
     background-color: var(--menu-hover-color);
 }
 /* end collapsable */
@@ -133,4 +180,17 @@ div.op:hover, div.num:hover{
 /* equals button */
 .eq{
     background: var(--eq-color);
+}
+/* END CALCULATOR */
+/* github sticker */
+a{
+    text-decoration: none;
+}
+#sticker{
+    background-color: rgba(235,235,235, 0);
+    position: fixed; 
+    bottom: 10px;
+    right: -5%;
+    width: 30%;
+    font-size: 2em;
 }
