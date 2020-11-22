@@ -5,9 +5,16 @@
     <h1>Awesomest calculator</h1>
     <!-- Start Calc-->
     <div class="calc" id="calc">
+        <div id="titleBar">
+            <div id="title">Normal calc</div>
+            <div></div>
+            <img src="minimize.svg" onClick="windowAction('minimize')"/>
+            <img src="maximize.svg" onClick="windowAction('maximize')"/>
+            <img src="close.svg" onClick="windowAction('close')"/>
+        </div>
         <!--First half, screen -->
-        <div class="up">
-            <div id="title">Calc _ o x</div>
+        <div class="up" id="up">
+            
 
             <div class="menu" id="subbar">
                 <img src="menu.svg" onClick="expand()"/>
@@ -35,7 +42,7 @@
         </div>
         <!--End screen-->
         <!-- Second half, buttons area-->
-        <div class="down">
+        <div class="down" id="down">
             <!-- 1 row -->
             <div class="button op" id="percentage" onclick="onClickEvent(this)">%</div>
             <div class="button op" id="ce" onclick="onClickEvent(this)"> ℂ𝜖 </div>
@@ -249,7 +256,9 @@
     }
 </script>
 <script>
-    var m = document.getElementById('calc');
+    /* m is used in windowAction.js too*/
+    var m = document.getElementById("calc");
+    /* title is used in too */
     var title = document.getElementById("title");
     var x1, x2;
     var posx, posy;
@@ -272,6 +281,56 @@
         m.style.left = x1+e.clientX +"px";
         m.style.top = y1+e.clientY +"px";
     };
+    </script>
+
+    <script>
+    var titleBar = document.getElementById("titleBar");
+    var upScreen = document.getElementById("up");
+    var downScreen = document.getElementById("down");
+    /* windos actions */
+    var isMaximized = false;
+    var isMinimized = false;
+    /* Gettin' values from css */
+    var iniWidth = getComputedStyle(document.documentElement).getPropertyValue("--min-sizeX-calc");
+    var iniHeight = getComputedStyle(document.documentElement).getPropertyValue("--min-sizeY-calc");
+    function windowAction(action){
+        switch(action){
+            case "minimize":
+                if(!isMinimized){
+                    isMinimized = true;
+                    upScreen.classList.add("minimize");
+                    downScreen.classList.add("minimize");
+                    titleBar.classList.add("minTitleBar");
+                    m.classList.add("minimizeCalc");
+                }else{
+                    m.classList.remove("minimizeCalc");
+                    upScreen.classList.remove("minimize");
+                    downScreen.classList.remove("minimize");
+                    titleBar.classList.remove("minTitleBar");                    
+                    isMinimized = false;
+                }
+                break;
+            case "maximize":
+                if(isMinimized) windowAction("minimize");
+                if(isMaximized){
+                    m.style.width=iniWidth;
+                    m.style.height=iniHeight;
+                    m.style.left = window.screen.width/2.5+"px";
+                    m.style.top = window.screen.height/20+"px";
+                    isMaximized = false;
+                }else{
+                    m.style.width=(window.screen.width-(window.screen.width/10))+"px";
+                    m.style.height=(window.screen.height-(window.screen.height/10))+"px";
+                    m.style.left = "5%";
+                    m.style.top ="5%";
+                    isMaximized = true;
+                }
+                break;
+            case "close":
+                window.close();
+                break;
+        }
+    }
     </script>
     <script>
     /* animation starts on windows.onLoad.. little trick */
