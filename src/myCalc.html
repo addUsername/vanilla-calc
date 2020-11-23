@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="mycss.css">
 <body>
     <h1>Awesomest calculator</h1>
@@ -91,7 +92,7 @@
     var presentNum = "";
     var pastNum = String.fromCharCode(160);
     var record = [];
-    var count = 0; // Keep track of result
+    var count = undefined; // Keep track of result
     var sign = true; //true is postive number
     var isDecimal = false;    
 
@@ -108,6 +109,7 @@
                 }
                 break;
             case "button eq":
+                if(presentNum == "") break;
                 solve();
                 break;
         }
@@ -116,6 +118,7 @@
     function operation(id){
         switch(id){
             case "percentage":
+                if(presentNum == "") break;
                 pastNum += '('+presentNum+'/100)+';
                 presentNum = "";
                 break;
@@ -132,24 +135,31 @@
                 presentNum = presentNum.substring(0,presentNum.length-1);
                 break;
             case "inv":
+                if(presentNum == "") break;
                 writeInv();
                 break;
             case "pow":
+                if(presentNum == "") break;
                 writePow();
                 break; 
             case "sqrt":
+                if(presentNum == "") break;
                 writeSqrt();
                 break;
             case "div":
+                if(presentNum == "") break;
                 writeEval('/');
                 break;
             case "mult":
+                if(presentNum == "") break;
                 writeEval('*');
                 break;
             case "min":
+                if(presentNum == "") break;
                 writeEval('-');
                 break;
             case "plus":
+                if(presentNum == "") break;
                 writeEval('+');
                 break;
         }
@@ -205,11 +215,11 @@
         presentNum = "";
     }
     function updateDisplays(){
-        if(count == 0){
+        if(count == undefined){
             present.innerText = ((!sign)? '-':"" ) + presentNum;
         }else{
             present.innerText = count;
-            count = 0;
+            count = undefined;
         }        
         past.innerText = pastNum;
     }
@@ -220,9 +230,8 @@
             return;
         }
         record.forEach(function(story) {
-            var textnode = document.createElement('p');
-            textnode.innerText = story;
-            textnode.addEventListener("click", goBack,true);
+            var textnode = document.createElement("div");
+            textnode.innerHTML = "<div onclick='goBack(this)' class=option>"+story+" =</div><div style='font-size:2em;font-weight: bold;cursor: context-menu;'>"+eval(story)+"</div><hr/>";
             textnode.classList.add("record");
             historyMenu.appendChild(textnode);
         });
@@ -230,9 +239,11 @@
     }
     function goBack(e){
         expandHistory();
-        pastNum = (this.innerHTML);
-        presentNum = 0;
+        // drop " ="
+        pastNum = (e.innerText.substring(0,e.innerText.length - 1));
+        presentNum = "";
         count = eval(pastNum);
+        pastNum = pastNum+'+';
         updateDisplays();
     }
     function addNum(num){
@@ -242,14 +253,13 @@
         if(x == "sign"){
            sign = !sign;
         }else{
-            if(!isDecimal) presentNum += ",";
+            if(!isDecimal) presentNum += ".";
             isDecimal = true;
         }
     }
     function solve(){
         writeEval('');
         count = eval(pastNum);
-        //pastNum = count+'+';
         record.push(pastNum);
         pastNum = String.fromCharCode(160); 
         updateHistory();
@@ -335,7 +345,6 @@
     <script>
     /* animation starts on windows.onLoad.. little trick */
     var menu = document.getElementById("options");
-    //var historyMenu = document.getElementById("history");
 
     menu.style.overflow = "hidden";
     historyMenu.style.overflow = "hidden";
